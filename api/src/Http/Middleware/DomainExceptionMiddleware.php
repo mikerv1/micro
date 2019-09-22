@@ -16,7 +16,7 @@ class DomainExceptionMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
-            //var_dump($handler); exit();
+            //VarDumper::dump($handler); exit();
             return $handler->handle($request);
             //VarDumper::dump($handler); exit();
         } catch (\DomainException $e) {

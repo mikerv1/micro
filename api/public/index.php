@@ -18,9 +18,7 @@ if (file_exists('.env')) {
 
 (function () {
     $container = require 'config/container.php';
-    
-    //var_dump ($container); exit();
-    
+        
     AppFactory::setContainer($container);
 
     $app = AppFactory::create();

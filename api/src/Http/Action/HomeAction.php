@@ -7,7 +7,7 @@ namespace Api\Http\Action;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Container\ContainerInterface;
+//use Psr\Container\ContainerInterface;
 use Zend\Diactoros\Response\JsonResponse;
 
 class HomeAction implements RequestHandlerInterface

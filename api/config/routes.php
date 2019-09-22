@@ -10,10 +10,11 @@ use Api\Http\Middleware;
 
 return function (App $app, ContainerInterface $container) {
     
+    $app->add(Middleware\BodyParamsMiddleware::class);
     $app->add(Middleware\DomainExceptionMiddleware::class);
     $app->add(Middleware\ValidationExceptionMiddleware::class);
     
-    $app->get('/', Action\HomeAction::class);
+    $app->get('/', Action\HomeAction::class . ':handle');
     
     $app->post('/auth/signup', Action\Auth\SignUp\RequestAction::class . ':handle');
     
