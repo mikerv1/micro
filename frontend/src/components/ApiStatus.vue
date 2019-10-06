@@ -22,8 +22,11 @@
       axios.get('/').then(response => {
         this.name = response.data.name;
         this.version = response.data.version;
-      });
+        console.log(this.name);
+      });      
+      //console.log(this.name);
     },
+    
   }
 </script>
 

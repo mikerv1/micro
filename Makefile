@@ -1,8 +1,8 @@
 up:
-        docker-compose up -d
+	docker-compose up -d
 
 down:
-        docker-compose down
+	docker-compose down
 
 init: docker-clear docker-up api-permissions api-env api-composer api-genrsa api-migration api-fixtures frontend-env frontend-install frontend-build storage-permissions websocket-env websocket-key websocket-install websocket-start
 

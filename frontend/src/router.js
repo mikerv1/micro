@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Ex from './views/Ex.vue'
 
 Vue.use(Router);
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/author/video/:id',
       name: 'author.video',
       component: () => import('./views/Author/Video/Show.vue')
+    },
+    {
+      path: '/ex',
+      name: 'ex',
+      component: Ex
     }
   ]
 })

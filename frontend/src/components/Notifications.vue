@@ -4,8 +4,7 @@
         show dismissible
         variant="primary"
         v-for="(notification, index) in notifications"
-        @dismissed="close(index)"
-    >
+        @dismissed="close(index)">
       {{ notification }}
     </b-alert>
   </div>
