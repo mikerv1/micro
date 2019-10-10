@@ -22,8 +22,6 @@ class HomeAction implements RequestHandlerInterface
     
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        //$myName = $this->container->get('name');
-        
         $response = new JsonResponse([
             'name' => 'App API',
             'version' => '1.0',
@@ -53,8 +51,6 @@ class HomeAction implements RequestHandlerInterface
             ]
         ]
         ]);
-        
-        //VarDumper::dump($response); exit();
         
         return $response;
     }

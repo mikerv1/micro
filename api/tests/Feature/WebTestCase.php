@@ -23,61 +23,81 @@ class WebTestCase extends TestCase
 {
     private $fixtures = [];
 
-    protected function get(string $uri): ResponseInterface
+    protected function get(string $uri, array $headers = []): ResponseInterface
     {
-        return $this->method($uri, 'GET');
+        return $this->method($uri, 'GET', [], $headers);
     }
 
-    protected function post(string $uri, array $params = []): ResponseInterface
+    protected function post(string $uri, array $params = [], array $headers = []): ResponseInterface
     {
-        return $this->method($uri, 'POST', $params);
+        return $this->method($uri, 'POST', $params, $headers);
     }
 
-    protected function method(string $uri, $method, array $params = []): ResponseInterface
+    protected function method(string $uri, $method, array $params = [], array $headers = []): ResponseInterface
     {
         $body = new Stream('php://temp', 'r+');
         $body->write(json_encode($params));
         $body->rewind();
 
-        return $this->request(
-            (new ServerRequest())
-                ->withHeader('Content-Type', 'application/json')
-                ->withHeader('Accept', 'application/json')
-                ->withUri(new Uri('http://test' . $uri))
-                ->withMethod($method)
-                ->withBody($body)
-        );
+        $request = (new ServerRequest())
+            ->withHeader('Content-Type', 'application/json')
+            ->withHeader('Accept', 'application/json')
+            ->withUri(new Uri('http://test' . $uri))
+            ->withMethod($method)
+            ->withBody($body);
+
+        foreach ($headers as $name => $value) {
+            $request = $request->withHeader($name, $value);
+        }
+        
+        return $this->request($request);
     }
+
     protected function request(ServerRequestInterface $request): ResponseInterface
     {
         $response = $this->app()->handle($request);
         $response->getBody()->rewind();
         return $response;
     }
+
     protected function loadFixtures(array $fixtures): void
     {
         $container = $this->container();
         $em = $container->get(EntityManagerInterface::class);
         $loader = new Loader();
-        foreach ($fixtures as $class) {
+        foreach ($fixtures as $name => $class) {
             if ($container->has($class)) {
                 $fixture = $container->get($class);
             } else {
                 $fixture = new $class;
             }
             $loader->addFixture($fixture);
+            $this->fixtures[$name] = $fixture;
         }
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());
     }
+
+    protected function getFixture($name)
+    {
+        if (!array_key_exists($name, $this->fixtures)) {
+            throw new \InvalidArgumentException('Undefined fixture ' . $name);
+        }
+        return $this->fixtures[$name];
+    }
+
     private function app(): App
     {
         $container = $this->container();
+        
         AppFactory::setContainer($container);
+
         $app = AppFactory::create();
+        
         (require 'config/routes.php')($app, $container);
         return $app;
     }
+
     private function container(): ContainerInterface
     {
         return require 'config/container.php';

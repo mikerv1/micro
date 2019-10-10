@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <line-chart
+    <chart-area
       v-if="loaded"
       :chartdata="chartdata"
       :options="options"/>
@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import LineChart from '@/components/Chart.vue'
+import ChartArea from '@/components/Chart.vue'
 import axios from 'axios'
 
 export default {
   name: 'PolarAreaExample',
-  components: { LineChart },
+  components: { ChartArea },
   data: () => ({
     loaded: false,
     chartdata: null,
