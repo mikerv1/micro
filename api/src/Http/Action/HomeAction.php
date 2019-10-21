@@ -51,7 +51,7 @@ class HomeAction implements RequestHandlerInterface
             ]
         ]
         ]);
-        
+        //\Symfony\Component\VarDumper\VarDumper::dump($response);exit();
         return $response;
     }
 }

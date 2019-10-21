@@ -49,7 +49,6 @@ class WebTestCase extends TestCase
         foreach ($headers as $name => $value) {
             $request = $request->withHeader($name, $value);
         }
-        
         return $this->request($request);
     }
 

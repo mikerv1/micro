@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Api\Data\Migration;
 
@@ -10,13 +8,8 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190909071917 extends AbstractMigration
+final class Version20181008162757 extends AbstractMigration
 {
-    public function getDescription() : string
-    {
-        return '';
-    }
-
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs

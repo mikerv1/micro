@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Api\Http\Action;
 use Api\Http\Middleware;
 use Api\Http\Validator\Validator;
-//use Api\Http\VideoUrl;
 use Api\Model;
 use Api\ReadModel;
 use Doctrine\Common\Annotations\AnnotationRegistry;
@@ -13,6 +12,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use League\OAuth2\Server;
 
 return [
     ValidatorInterface::class => function () {
@@ -40,6 +40,12 @@ return [
         return new Middleware\ValidationExceptionMiddleware();
     },
             
+    Middleware\ResourceServerMiddleware::class => function (ContainerInterface $container) {
+        return new Middleware\ResourceServerMiddleware(
+            $container->get(Server\ResourceServer::class)
+        );
+    },
+            
     Action\HomeAction::class => function () {
         return new Action\HomeAction();
     },
@@ -62,6 +68,12 @@ return [
         return new Action\Auth\OAuthAction(
             $container->get(\League\OAuth2\Server\AuthorizationServer::class),
             $container->get(LoggerInterface::class)
+        );
+    },
+            
+    Action\Profile\ShowAction::class => function (ContainerInterface $container) {
+        return new Action\Profile\ShowAction(
+            $container->get(ReadModel\User\UserReadRepository::class)
         );
     },
 ];

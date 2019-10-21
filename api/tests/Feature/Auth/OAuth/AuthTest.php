@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Api\Test\Feature\Auth\OAuth;
 
 use Api\Test\Feature\WebTestCase;
+use DMS\PHPUnitExtensions\ArraySubset\Assert;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class AuthTest extends WebTestCase
 {
+    use ArraySubsetAsserts;
+    
     protected function setUp(): void
     {
         $this->loadFixtures([
@@ -19,8 +23,8 @@ class AuthTest extends WebTestCase
 
     public function testMethod(): void
     {
-        $response = $this->get('/oauth/auth');
-        self::assertEquals(405, $response->getStatusCode());
+        $response = $this->post('/oauth/auth');
+        self::assertEquals(400, $response->getStatusCode());
     }
 
     public function testSuccess(): void
@@ -39,6 +43,8 @@ class AuthTest extends WebTestCase
         self::assertJson($content = $response->getBody()->getContents());
 
         $data = json_decode($content, true);
+        
+        //\Symfony\Component\VarDumper\VarDumper::dump($data);exit();
 
         self::assertArraySubset([
             'token_type' => 'Bearer',
@@ -64,6 +70,6 @@ class AuthTest extends WebTestCase
             'client_secret' => '',
         ]);
 
-        self::assertEquals(401, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
     }
 }

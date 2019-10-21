@@ -18,12 +18,6 @@ class ShowTest extends WebTestCase
         parent::setUp();
     }
 
-    public function testGuest(): void
-    {
-        $response = $this->get('/profile');
-        self::assertEquals(401, $response->getStatusCode());
-    }
-
     public function testSuccess(): void
     {
         $fixture = $this->getAuth();

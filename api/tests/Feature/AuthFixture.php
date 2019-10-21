@@ -36,7 +36,8 @@ class AuthFixture extends AbstractFixture
         $token = new AccessTokenEntity();
         $token->setIdentifier(bin2hex(random_bytes(40)));
         $token->setUserIdentifier($user->getId()->getId());
-        $token->setExpiryDateTime(new \DateTime('+1 hour'));
+        $token->setExpiryDateTime(new \DateTimeImmutable('+1 hour'));
+        $token->setPrivateKey(CryptKeyHelper::get());
         $token->setClient(new ClientEntity('app'));
         $token->addScope(new ScopeEntity('common'));
 
@@ -45,8 +46,8 @@ class AuthFixture extends AbstractFixture
         $manager->flush();
 
         $this->addReference('user', $user);
-
-        $this->token = (string)$token->convertToJWT(CryptKeyHelper::get());
+        
+        $this->token = (string)$token;
     }
 
     public function getUser(): User

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Api\Test\Feature\Auth\SignUp;
 
 use Api\Test\Feature\WebTestCase;
-use Symfony\Component\VarDumper\VarDumper; 
 
 class ConfirmTest extends WebTestCase
 {

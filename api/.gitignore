@@ -3,3 +3,6 @@
 
 /private.key
 /public.key
+
+/tests/data/private.key
+/tests/data/public.key

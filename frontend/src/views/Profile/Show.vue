@@ -34,6 +34,7 @@
         .get('/profile')
         .then(response => {
           this.profile = response.data;
+          //console.log(response.data);
         })
     }
   }

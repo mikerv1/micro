@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 Vue.use(Vuex);
-//Vue.config.devtools = true;
 
 export default new Vuex.Store({
   state: {
